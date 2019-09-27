@@ -24,22 +24,15 @@ export default {
   },
   methods: {
     ...mapActions([
-      'handleLogin',
-      'getUserInfo'
+      'handleLogin'
     ]),
-    handleSubmit ({ userName, password }) {
-      this.handleLogin({ userName, password }).then(res => {
-        this.getUserInfo().then(res => {
-          this.$router.push({
-            name: this.$config.homeName
-          })
+    handleSubmit ({ username, password }) {
+      this.handleLogin({ username, password }).then(res => {
+        this.$router.push({
+          name: 'music-home'
         })
       })
     }
   }
 }
 </script>
-
-<style>
-
-</style>

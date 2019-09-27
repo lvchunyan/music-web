@@ -1,46 +1,41 @@
 import {
   login,
   logout,
-  getUserInfo,
   getMessage,
   getContentByMsgId,
   hasRead,
   removeReaded,
-  restoreTrash,
-  getUnreadCount
+  restoreTrash
 } from '@/api/user'
-import { setToken, getToken } from '@/libs/util'
+import path from '@/libs/path'
 
 export default {
   state: {
-    userName: '',
+    username: '',
     userId: '',
-    avatarImgPath: '',
-    token: getToken(),
+    avatorImgPath: '',
+    token: '',
     access: '',
     hasGetInfo: false,
     unreadCount: 0,
+    messageType: 0,
     messageUnreadList: [],
     messageReadedList: [],
     messageTrashList: [],
     messageContentStore: {}
   },
   mutations: {
-    setAvatar (state, avatarPath) {
-      state.avatarImgPath = avatarPath
+    setAvator (state, avatorPath) {
+      state.avatorImgPath = avatorPath
     },
     setUserId (state, id) {
       state.userId = id
     },
     setUserName (state, name) {
-      state.userName = name
+      state.username = name
     },
     setAccess (state, access) {
       state.access = access
-    },
-    setToken (state, token) {
-      state.token = token
-      setToken(token)
     },
     setHasGetInfo (state, status) {
       state.hasGetInfo = status
@@ -61,7 +56,7 @@ export default {
       state.messageContentStore[msgId] = content
     },
     moveMsg (state, { from, to, msgId }) {
-      const index = state[from].findIndex(_ => _.msg_id === msgId)
+      const index = state[from].findIndex(_ => _.msgId === msgId)
       const msgItem = state[from].splice(index, 1)[0]
       msgItem.loading = false
       state[to].unshift(msgItem)
@@ -74,15 +69,21 @@ export default {
   },
   actions: {
     // 登录
-    handleLogin ({ commit }, { userName, password }) {
-      userName = userName.trim()
+    handleLogin ({ commit }, { username, password }) {
+      username = username.trim()
       return new Promise((resolve, reject) => {
         login({
-          userName,
+          username,
           password
         }).then(res => {
-          const data = res.data
-          commit('setToken', data.token)
+          if (res.data) {
+            commit('setToken', res.data.data.token)
+            localStorage.setItem('lng-token', res.data.data.token)
+            localStorage.setItem('userId', res.data.data.userId)
+            localStorage.setItem('avatorImgPath', res.data.data.avatar)
+            localStorage.setItem('userName', res.data.data.realName)
+            localStorage.setItem('access', '1')
+          }
           resolve()
         }).catch(err => {
           reject(err)
@@ -95,57 +96,58 @@ export default {
         logout(state.token).then(() => {
           commit('setToken', '')
           commit('setAccess', [])
+          localStorage.removeItem('lng-token')
           resolve()
         }).catch(err => {
           reject(err)
         })
-        // 如果你的退出登录无需请求接口，则可以直接使用下面三行代码而无需使用logout调用接口
-        // commit('setToken', '')
-        // commit('setAccess', [])
-        // resolve()
-      })
-    },
-    // 获取用户相关信息
-    getUserInfo ({ state, commit }) {
-      return new Promise((resolve, reject) => {
-        try {
-          getUserInfo(state.token).then(res => {
-            const data = res.data
-            commit('setAvatar', data.avatar)
-            commit('setUserName', data.name)
-            commit('setUserId', data.user_id)
-            commit('setAccess', data.access)
-            commit('setHasGetInfo', true)
-            resolve(data)
-          }).catch(err => {
-            reject(err)
-          })
-        } catch (error) {
-          reject(error)
-        }
       })
     },
     // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表
     getUnreadMessageCount ({ state, commit }) {
-      getUnreadCount().then(res => {
-        const { data } = res
-        commit('setMessageCount', data)
+      if (!localStorage.getItem('lng-token')) {
+        return false
+      }
+      let lngToken = localStorage.getItem('lng-token')
+      let userId = localStorage.getItem('userId')
+      this.eventSource = new EventSource(path.connect + '?userId=' + userId + '&lng-token=' + lngToken)
+      this.eventSource.addEventListener('open', function (e) {
+        console.log('connected')
       })
+      this.eventSource.addEventListener('message', function (e) {
+        let data = JSON.parse(e.data)
+        if (data.type === 'notReadMessageCount') {
+          commit('setMessageCount', parseInt(data.data.totalCount))
+        }
+      }, false)
+      this.eventSource.addEventListener('error', function (e) {
+        if (e.readyState === EventSource.CLOSED) {
+          console.log('CLOSED')
+        }
+      }, false)
     },
     // 获取消息列表，其中包含未读、已读、回收站三个列表
     getMessageList ({ state, commit }) {
       return new Promise((resolve, reject) => {
-        getMessage().then(res => {
-          const { unread, readed, trash } = res.data
-          commit('setMessageUnreadList', unread.sort((a, b) => new Date(b.create_time) - new Date(a.create_time)))
-          commit('setMessageReadedList', readed.map(_ => {
-            _.loading = false
-            return _
-          }).sort((a, b) => new Date(b.create_time) - new Date(a.create_time)))
-          commit('setMessageTrashList', trash.map(_ => {
-            _.loading = false
-            return _
-          }).sort((a, b) => new Date(b.create_time) - new Date(a.create_time)))
+        let unreadList = []
+        let readedList = []
+        let trashList = []
+        let params = {
+          pageSize: 9999
+        }
+        getMessage(params).then(res => {
+          if (res.data.data.records.length) {
+            res.data.data.records.forEach(function (e) {
+              if (e.state === '1') {
+                unreadList.push(e.messageBasic)
+              } else {
+                readedList.push(e.messageBasic)
+              }
+            })
+            commit('setMessageUnreadList', unreadList)
+            commit('setMessageReadedList', readedList)
+            commit('setMessageTrashList', trashList)
+          }
           resolve()
         }).catch(error => {
           reject(error)

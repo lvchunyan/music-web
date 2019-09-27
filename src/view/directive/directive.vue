@@ -73,8 +73,8 @@ export default {
     return {
       modalVisible: false,
       options: {
-        trigger: '.ivu-modal-body',
-        body: '.ivu-modal',
+        trigger: '.ivu-modal-form-body',
+        body: '.ivu-modal-form',
         recover: true
       },
       buttonOptions: {

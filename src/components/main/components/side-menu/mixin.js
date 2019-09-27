@@ -1,12 +1,12 @@
 import CommonIcon from '_c/common-icon'
-import { showTitle } from '@/libs/util'
+import { util } from '@/libs/common'
 export default {
   components: {
     CommonIcon
   },
   methods: {
     showTitle (item) {
-      return showTitle(item, this)
+      return util.showTitle(item, this)
     },
     showChildren (item) {
       return item.children && (item.children.length > 1 || (item.meta && item.meta.showAlways))

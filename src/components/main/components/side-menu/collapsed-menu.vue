@@ -12,7 +12,7 @@
 <script>
 import mixin from './mixin'
 import itemMixin from './item-mixin'
-import { findNodeUpperByClasses } from '@/libs/util'
+import { util } from '@/libs/common'
 
 export default {
   name: 'CollapsedMenu',
@@ -44,7 +44,7 @@ export default {
     }
   },
   mounted () {
-    let dropdown = findNodeUpperByClasses(this.$refs.dropdown.$el, ['ivu-select-dropdown', 'ivu-dropdown-transfer'])
+    let dropdown = util.findNodeUpperByClasses(this.$refs.dropdown.$el, ['ivu-select-dropdown', 'ivu-dropdown-transfer'])
     if (dropdown) dropdown.style.overflow = 'visible'
   }
 }

@@ -9,7 +9,7 @@
   </div>
 </template>
 <script>
-import { showTitle } from '@/libs/util'
+import { util } from '@/libs/common'
 import CommonIcon from '_c/common-icon'
 import './custom-bread-crumb.less'
 export default {
@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     showTitle (item) {
-      return showTitle(item, this)
+      return util.showTitle(item, this)
     },
     isCustomIcon (iconName) {
       return iconName.indexOf('_') === 0

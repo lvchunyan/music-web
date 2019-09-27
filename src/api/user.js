@@ -1,20 +1,21 @@
-import axios from '@/libs/api.request'
+import { path, axios } from '@/libs/common'
 
-export const login = ({ userName, password }) => {
+export const login = ({ username, password }) => {
   const data = {
-    userName,
+    username,
     password
   }
   return axios.request({
-    url: 'login',
+    url: path.userLogin,
     data,
-    method: 'post'
+    method: 'post',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }
   })
 }
 
 export const getUserInfo = (token) => {
   return axios.request({
-    url: 'get_info',
+    url: path.getUserSubject,
     params: {
       token
     },
@@ -24,21 +25,15 @@ export const getUserInfo = (token) => {
 
 export const logout = (token) => {
   return axios.request({
-    url: 'logout',
+    url: path.logout,
     method: 'post'
   })
 }
 
-export const getUnreadCount = () => {
+export const getMessage = (params) => {
   return axios.request({
-    url: 'message/count',
-    method: 'get'
-  })
-}
-
-export const getMessage = () => {
-  return axios.request({
-    url: 'message/init',
+    url: path.getMyLngMessageList,
+    params,
     method: 'get'
   })
 }

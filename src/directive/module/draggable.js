@@ -1,4 +1,4 @@
-import { on } from '@/libs/tools'
+import tools from '@/libs/tools'
 export default {
   inserted: (el, binding, vnode) => {
     let triggerDom = document.querySelector(binding.value.trigger)
@@ -29,9 +29,9 @@ export default {
     const handleMouseup = e => {
       canMove = false
     }
-    on(triggerDom, 'mousedown', handleMousedown)
-    on(document, 'mousemove', handleMousemove)
-    on(document, 'mouseup', handleMouseup)
+    tools.on(triggerDom, 'mousedown', handleMousedown)
+    tools.on(document, 'mousemove', handleMousemove)
+    tools.on(document, 'mouseup', handleMouseup)
   },
   update: (el, binding, vnode) => {
     if (!binding.value.recover) return

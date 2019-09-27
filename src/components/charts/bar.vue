@@ -5,7 +5,7 @@
 <script>
 import echarts from 'echarts'
 import tdTheme from './theme.json'
-import { on, off } from '@/libs/tools'
+import tools from '@/libs/tools'
 echarts.registerTheme('tdTheme', tdTheme)
 export default {
   name: 'ChartBar',
@@ -48,11 +48,11 @@ export default {
       }
       this.dom = echarts.init(this.$refs.dom, 'tdTheme')
       this.dom.setOption(option)
-      on(window, 'resize', this.resize)
+      tools.on(window, 'resize', this.resize)
     })
   },
   beforeDestroy () {
-    off(window, 'resize', this.resize)
+    tools.off(window, 'resize', this.resize)
   }
 }
 </script>

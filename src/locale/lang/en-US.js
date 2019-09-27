@@ -1,6 +1,5 @@
 export default {
   home: 'Home',
-  login: 'Login',
   components: 'Components',
   count_to_page: 'Count-to',
   tables_page: 'Table',
@@ -30,7 +29,7 @@ export default {
   drag_list_page: 'Drag-list',
   i18n_page: 'Internationalization',
   modalTitle: 'Modal Title',
-  content: 'This is the modal box content.',
+  content: 'This is the modal-form box content.',
   buttonText: 'Show Modal',
   'i18n-tip': 'Note: Only this page is multi-language, other pages do not add language content to the multi-language package.',
   error_store_page: 'Error Collection',
@@ -41,6 +40,5 @@ export default {
   message_page: 'Message Center',
   tree_table_page: 'Tree Table',
   org_tree_page: 'Org Tree',
-  drag_drawer_page: 'Draggable Drawer',
-  tree_select_page: 'Tree Selector'
+  drag_drawer_page: 'Draggable Drawer'
 }

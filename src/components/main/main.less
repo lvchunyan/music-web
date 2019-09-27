@@ -1,75 +1,229 @@
-.main{
-  .logo-con{
-    height: 64px;
-    padding: 10px;
-    img{
-      height: 44px;
-      width: auto;
-      display: block;
-      margin: 0 auto;
+.main {
+    .logo-con {
+        height: 64px;
+        padding: 10px;
+        img {
+            height: 44px;
+            width: 44px;
+            display: inline-block;
+        }
+        .title {
+            display: inline-block;
+            color: #fff;
+            font-size: 26px;
+            margin: 3px 0 0 15px;
+            vertical-align: top;
+        }
     }
-  }
-  .header-con{
-    background: #fff;
-    padding: 0 20px;
-    width: 100%;
-  }
-  .main-layout-con{
-    height: 100%;
-    overflow: hidden;
-  }
-  .main-content-con{
-    height: ~"calc(100% - 60px)";
-    overflow: hidden;
-  }
-  .tag-nav-wrapper{
-    padding: 0;
-    height:40px;
-    background:#F0F0F0;
-  }
-  .content-wrapper{
-    padding: 18px;
-    height: ~"calc(100% - 80px)";
-    overflow: auto;
-  }
-  .left-sider{
-    .ivu-layout-sider-children{
-      overflow-y: scroll;
-      margin-right: -18px;
+    .header-con {
+        background: #495060;
+        padding: 0 20px;
+        width: 100%;
+        color: #fff;
     }
-  }
+    .main-layout-con {
+        height: 100%;
+        overflow: hidden;
+    }
+    .main-content-con {
+        height: ~"calc(100% - 60px)";
+        overflow: hidden;
+    }
+    .tag-nav-wrapper {
+        padding: 0;
+        height: 40px;
+        background: #495060;
+    }
+    .content-wrapper {
+        padding: 18px;
+        right: 0;
+        overflow: auto;
+        background: url("../../assets/images/img/cardBackground.png") no-repeat;
+        width: 100%;
+        background-size: 100% 100%;
+        .ivu-card,.ivu-card-bordered{
+            background: transparent;
+            border-color: #5a5c5f;
+        }
+    }
+    .content-wrapper::-webkit-scrollbar {
+        display: none;
+    }
+    .ivu-table-wrapper{
+        border-left: 1px solid #303345;
+        border-top: 0;
+    }
+    .left-sider {
+        .ivu-layout-sider-children {
+            overflow-y: scroll;
+            margin-right: -18px;
+        }
+    }
+
+    .ivu-table{
+        color:#ffffff;
+        background: transparent;
+    }
+    .ivu-table th{
+        background-color:#01354D;
+    }
+
+    .ivu-table td{
+        background:transparent;
+    }
+
+    .ivu-table td, .ivu-table th{
+        border-bottom: 1px solid #01354D;
+    }
+
+    .ivu-table-row:hover{
+        background: rgba(29,61,82,0.4);
+    }
+
+    /*tr.ivu-table-row-hover td{
+        background: rgba(29,61,82,0.4);
+    }*/
+
+    .ivu-table:after, .ivu-table:before{
+        background-color:transparent;
+    }
+
+    .ivu-form .ivu-form-item-label{
+        color: #F2F2F2;
+        font-size: 16px;
+        padding: 0 12px 10px 0;
+    }
+
+    .ivu-input{
+        font-size: 14px;
+        background-color: transparent;
+        color: #ffffff;
+        border: 1px solid #1D3D52;
+    }
+
+    .ivu-input::-webkit-input-placeholder, ivu-textarea::-webkit-input-placeholder {
+        font-size: 14px;
+        color: #e4e5e77a;
+    }
+
+    .ivu-input-group-append, .ivu-input-group-prepend {
+        background-color: #1f6781;
+        border: 1px solid #1d3d52;
+        color:#FFFFFF;
+    }
+
+    .ivu-spin-fix{
+        background-color: #e4e5e77a;
+    }
+
+    .ivu-select-selection{
+        background: transparent;
+        border: 1px solid #1D3D52;
+        color: #fff;
+    }
+    .ivu-select-single .ivu-select-selection .ivu-select-placeholder, .ivu-select-single .ivu-select-selection .ivu-select-selected-value{
+        font-size: 14px;
+    }
+    .ivu-select-item-focus{
+        background-color: #1f6781;
+    }
+    .ivu-select-single .ivu-select-selection .ivu-select-placeholder{
+        font-size: 14px;
+        color: #e4e5e77a;
+    }
+    .ivu-select-dropdown{
+        background-color: #1d3d52;
+    }
+    .ivu-select-item{
+        color: #fff;
+        font-size: 14px;
+    }
+    .ivu-select-item:hover{
+        background-color: #1f6781;
+    }
+    .ivu-form-item-content{
+        line-height: 3px;
+    }
+    .ivu-radio-wrapper{
+        font-size: 14px;
+        color: #fff;
+    }
+    .ivu-checkbox-wrapper{
+        font-size: 14px;
+        color: #fff;
+    }
+    .ivu-col-span-24{
+        color: #fff;
+        font-size: 14px;
+    }
+    .ivu-dropdown-item{
+        color: #fff;
+        font-size: 14px;
+    }
+    .ivu-dropdown-item:hover{
+        background-color: #1f6781;
+    }
 }
-.ivu-menu-item > i{
-  margin-right: 12px !important;
-}
-.ivu-menu-submenu > .ivu-menu > .ivu-menu-item > i {
-  margin-right: 8px !important;
-}
-.collased-menu-dropdown{
-  width: 100%;
-  margin: 0;
-  line-height: normal;
-  padding: 7px 0 6px 16px;
-  clear: both;
-  font-size: 12px !important;
-  white-space: nowrap;
-  list-style: none;
-  cursor: pointer;
-  transition: background 0.2s ease-in-out;
-  &:hover{
-    background: rgba(100, 100, 100, 0.1);
-  }
-  & * {
-    color: #515a6e;
-  }
-  .ivu-menu-item > i{
+.ivu-menu-item > i {
     margin-right: 12px !important;
-  }
-  .ivu-menu-submenu > .ivu-menu > .ivu-menu-item > i {
-    margin-right: 8px !important;
-  }
 }
 
-.ivu-select-dropdown.ivu-dropdown-transfer{
-  max-height: 400px;
+.ivu-menu-submenu > .ivu-menu > .ivu-menu-item > i {
+    margin-right: 8px !important;
 }
+
+.collased-menu-dropdown {
+    width: 100%;
+    margin: 0;
+    line-height: normal;
+    padding: 7px 0 6px 16px;
+    clear: both;
+    font-size: 12px !important;
+    white-space: nowrap;
+    list-style: none;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+    &:hover {
+        background: rgba(100, 100, 100, 0.1);
+    }
+    & * {
+        color: #515a6e;
+    }
+    .ivu-menu-item > i {
+        margin-right: 12px !important;
+    }
+    .ivu-menu-submenu > .ivu-menu > .ivu-menu-item > i {
+        margin-right: 8px !important;
+    }
+}
+
+.ivu-select-dropdown.ivu-dropdown-transfer {
+    max-height: 400px;
+}
+.main.ivu-layout.ivu-layout-has-sider>.ivu-layout, .ivu-layout.ivu-layout-has-sider>.ivu-layout-content{
+    overflow-x: visible;
+}
+.ivu-page{
+    color: #fff;
+    li{
+        background: transparent;
+        //color: #fff;
+    }
+    .ivu-select-selection{
+        background: transparent;
+        color: #fff;
+    }
+    .ivu-page-options-elevator input{
+        background: transparent;
+        color: #fff;
+    }
+}
+
+
+
+
+
+
+
+
+

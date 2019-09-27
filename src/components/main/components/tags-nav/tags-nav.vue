@@ -37,7 +37,7 @@
             @on-close="handleClose(item)"
             @click.native="handleClick(item)"
             :closable="item.name !== $config.homeName"
-            :color="isCurrentTag(item) ? 'primary' : 'default'"
+            :color="isCurrentTag(item) ? '#fff' : '#8f969f6b'"
             @contextmenu.prevent.native="contextMenu(item, $event)"
           >{{ showTitleInside(item) }}</Tag>
         </transition-group>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { showTitle, routeEqual } from '@/libs/util'
+import { util } from '@/libs/common'
 import beforeClose from '@/router/before-close'
 export default {
   name: 'TagsNav',
@@ -113,7 +113,7 @@ export default {
         this.$emit('on-close', res, 'all')
       } else if (type.includes('others')) {
         // 关闭除当前页和home页的其他页
-        let res = this.list.filter(item => routeEqual(this.currentRouteObj, item) || item.name === this.$config.homeName)
+        let res = this.list.filter(item => util.routeEqual(this.currentRouteObj, item) || item.name === this.$config.homeName)
         this.$emit('on-close', res, 'others', this.currentRouteObj)
         setTimeout(() => {
           this.getTagElementByRoute(this.currentRouteObj)
@@ -132,17 +132,17 @@ export default {
       }
     },
     close (route) {
-      let res = this.list.filter(item => !routeEqual(route, item))
+      let res = this.list.filter(item => !util.routeEqual(route, item))
       this.$emit('on-close', res, undefined, route)
     },
     handleClick (item) {
       this.$emit('input', item)
     },
     showTitleInside (item) {
-      return showTitle(item, this)
+      return util.showTitle(item, this)
     },
     isCurrentTag (item) {
-      return routeEqual(this.currentRouteObj, item)
+      return util.routeEqual(this.currentRouteObj, item)
     },
     moveToView (tag) {
       const outerWidth = this.$refs.scrollOuter.offsetWidth
@@ -164,7 +164,7 @@ export default {
       this.$nextTick(() => {
         this.refsTag = this.$refs.tagsPageOpened
         this.refsTag.forEach((item, index) => {
-          if (routeEqual(route, item.$attrs['data-route-item'])) {
+          if (util.routeEqual(route, item.$attrs['data-route-item'])) {
             let tag = this.refsTag[index].$el
             this.moveToView(tag)
           }
