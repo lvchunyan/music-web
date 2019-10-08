@@ -1,5 +1,4 @@
-import Main from '@/components/main'
-/* import parentView from '@/components/parent-view' */
+import musicTop from '@/view/music-page/music-top.vue'
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -25,16 +24,6 @@ export const loginRouter = {
     hideInMenu: true
   },
   component: () => import('@/view/login/login.vue')
-}
-
-export const musicPageRouter = {
-  path: '/music-home',
-  name: 'music-home',
-  meta: {
-    title: '首页',
-    hideInMenu: true
-  },
-  component: () => import('@/view/music-page/music-home.vue')
 }
 
 export const page404 = {
@@ -67,19 +56,63 @@ export const page500 = {
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
 export const otherRouter = {
   path: '/',
-  name: 'otherRouter',
-  component: Main
+  name: 'otherRouter'
+  // component: Main
 }
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-
+  {
+    path: '/home',
+    name: 'home',
+    title: '首页',
+    meta: {
+      icon: 'ios-book',
+      title: '首页'
+    },
+    access: 1,
+    component: musicTop,
+    children: [
+      {
+        path: '/music-home', name: 'music-home', meta: { title: '首页', hideInMenu: false }, component: () => import('@/view/music-page/music-home.vue')
+      }
+    ]
+  },
+  {
+    path: '/sheet',
+    name: 'sheet',
+    meta: {
+      icon: 'ios-book',
+      title: '歌单'
+    },
+    access: 1,
+    component: musicTop,
+    children: [
+      {
+        path: '/music-sheet', name: 'music-sheet', meta: { title: '歌单', hideInMenu: false }, component: () => import('@/view/music-page/music-sheet.vue')
+      }
+    ]
+  },
+  {
+    path: '/my',
+    name: 'my',
+    meta: {
+      icon: 'ios-book',
+      title: '我的'
+    },
+    access: 1,
+    component: musicTop,
+    children: [
+      {
+        path: '/my-music', name: 'my-music', meta: { title: '我的', hideInMenu: false }, component: () => import('@/view/music-page/my-music.vue')
+      }
+    ]
+  }
 ]
 
 // 所有上面定义的路由都要写在下面的routers里
 export const routers = [
   loginRouter,
-  musicPageRouter,
   otherRouter,
   ...appRouter,
   page500,

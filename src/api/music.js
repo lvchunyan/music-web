@@ -1,5 +1,4 @@
 import { path, axios } from '@/libs/common'
-
 /**
  * @description 获取期刊列表
  * @param params

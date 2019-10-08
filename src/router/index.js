@@ -10,12 +10,11 @@ const RouterConfig = {
   routes: routers
 }
 const router = new VueRouter(RouterConfig)
-console.log(router)
 
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start()
-  const token = window.localStorage.getItem('lng-token')
-  if (!token && to.name !== 'login') {
+  const token = window.localStorage.getItem('token')
+  if (token && to.name !== 'login') {
     // 未登录且要跳转的页面不是登录页
     next({
       name: 'login' // 跳转到登录页

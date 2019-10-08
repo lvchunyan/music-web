@@ -1,30 +1,71 @@
 <template>
     <Row>
-        <Card>
-            <music-top></music-top>
+        <div>
             <Carousel autoplay v-model="value2" loop>
                 <template v-for="(item, index) in imgList">
                     <CarouselItem :key="index">
-                        <img :src="item.url" width="100%" height="300px">
+                        <!--<div style="position: relative;left: 50%;top: 200px;">-->
+                            <!--<p style="color: brown;font-size: 20px">{{ item.title }}</p>-->
+                            <!--<p style="color: brown;font-size: 20px">作者：{{ item.author }}</p>-->
+                        <!--</div>-->
+                        <div style="height: 300px">
+                            <img :src="item.url" width="100%" height="300px">
+                        </div>
                     </CarouselItem>
                 </template>
             </Carousel>
-        </Card>
+            <div style="display: flex;margin-top: 20px">
+                <Card dis-hover>
+                    <p slot="title">
+                        <Icon type="ios-musical-notes"></Icon>
+                        期刊推荐
+                    </p>
+                    <Row :gutter="16">
+                        <template v-for="(item, index) in musicList">
+                            <Col :key="index" span="6" style="margin-bottom: 15px">
+                                <img :key="index" :src="item.url" width="100%">
+                                <p :key="index">第{{ item.number }}期</p>
+                                <p :key="index">{{ item.title }}</p>
+                            </Col>
+                        </template>
+                    </Row>
+                </Card>
+                <div style="width: 100%">
+                    <Card style="background-color: #c3c3c3;height: 52px">
+                        最新单曲
+                    </Card>
+                    <template v-for="(item, index) in musicList.slice(0, 11)">
+                        <Card :key="index">
+                            <div style="display: flex;flex-direction: row;justify-content:flex-start">
+                                <div>
+                                    <img :src="item.url" width="60px" height="60px" style="border-radius: 30px">
+                                </div>
+                                <div style="margin:10px 0 0 10px">
+                                    <p>{{ item.title }}</p>
+                                    <p>作者：{{ item.author }}</p>
+                                </div>
+                            </div>
+                        </Card>
+                    </template>
+                </div>
+            </div>
+        </div>
     </Row>
 </template>
 
 <script>
-import musicTop from './music-top'
-import { getVolumeList } from '@/api/music'
+// import { getVolumeList } from '@/api/music'
+// import { path } from '@/libs/common'
+// import axios from 'axios'
+
 export default {
   name: 'music-home',
-  components: {
-    musicTop
-  },
   data () {
     return {
       value2: 0,
-      imgList: ''
+      imgList: [],
+      musicList: [],
+      button4: ''
     }
   },
   mounted () {
@@ -156,6 +197,41 @@ export default {
               'remark': 93,
               'thank': 8,
               'number': 10
+            },
+            {
+              'id': 10,
+              'title': '简单生活',
+              'caption': null,
+              'url': 'https://riverluooo.oss-cn-beijing.aliyuncs.com/luoo/f0837400f76b03bd872e4279ec02fe80/00.jpg',
+              'releaseTime': '2009-06-15',
+              'author': '左岸以西',
+              'star': 17958,
+              'remark': 93,
+              'thank': 8,
+              'number': 10
+            },
+            {
+              'id': 10,
+              'title': '简单生活',
+              'caption': null,
+              'url': 'https://riverluooo.oss-cn-beijing.aliyuncs.com/luoo/f0837400f76b03bd872e4279ec02fe80/00.jpg',
+              'releaseTime': '2009-06-15',
+              'author': '左岸以西',
+              'star': 17958,
+              'remark': 93,
+              'thank': 8,
+              'number': 10
+            }, {
+              'id': 10,
+              'title': '简单生活',
+              'caption': null,
+              'url': 'https://riverluooo.oss-cn-beijing.aliyuncs.com/luoo/f0837400f76b03bd872e4279ec02fe80/00.jpg',
+              'releaseTime': '2009-06-15',
+              'author': '左岸以西',
+              'star': 17958,
+              'remark': 93,
+              'thank': 8,
+              'number': 10
             }
           ],
           'total': 1000,
@@ -166,9 +242,10 @@ export default {
         }
       }
       this.imgList = data.data.records.slice(0, 3)
-      getVolumeList({ pageIndex: 1, pageSize: 1000 }).then(res => {
-        console.log(res)
-      })
+      this.musicList = data.data.records
+      // getVolumeList({ pageIndex: 1, pageSize: 1000 }).then(res => {
+      //   console.log(res)
+      // })
     }
   }
 }

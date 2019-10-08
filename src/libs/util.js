@@ -27,6 +27,7 @@ util.getMenuByRouter = (list, access) => {
     if (!item.meta || (item.meta && !item.meta.hideInMenu)) {
       let obj = {
         icon: (item.meta && item.meta.icon) || '',
+        title: (item.meta && item.meta.title) || '',
         name: item.name,
         meta: item.meta
       }
@@ -385,7 +386,7 @@ util.scrollTop = (el, from = 0, to, duration = 500, endCallback) => {
 util.setTitle = (routeItem, vm) => {
   const handledRoute = util.getRouteTitleHandled(routeItem)
   const pageTitle = util.showTitle(handledRoute, vm)
-  const resTitle = pageTitle ? `${config.title} - ${pageTitle}` : title
+  const resTitle = pageTitle ? `${config.title} - ${pageTitle}` : ''
   window.document.title = resTitle
 }
 
