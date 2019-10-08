@@ -1,19 +1,11 @@
 <template>
     <Row>
         <div>
-            <Carousel autoplay v-model="value2" loop>
-                <template v-for="(item, index) in imgList">
-                    <CarouselItem :key="index">
-                        <!--<div style="position: relative;left: 50%;top: 200px;">-->
-                            <!--<p style="color: brown;font-size: 20px">{{ item.title }}</p>-->
-                            <!--<p style="color: brown;font-size: 20px">作者：{{ item.author }}</p>-->
-                        <!--</div>-->
-                        <div style="height: 300px">
-                            <img :src="item.url" width="100%" height="300px">
-                        </div>
-                    </CarouselItem>
-                </template>
-            </Carousel>
+            <carousel :interval="4000" type="card" height="200px">
+                <carousel-item v-for="(item, index) in imgList" :key="index">
+                    <img :src="item.url" width="100%" height="300px">
+                </carousel-item>
+            </carousel>
             <div style="display: flex;margin-top: 20px">
                 <Card dis-hover>
                     <p slot="title">
@@ -54,15 +46,21 @@
 </template>
 
 <script>
+import { Carousel, CarouselItem } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
 // import { getVolumeList } from '@/api/music'
 // import { path } from '@/libs/common'
 // import axios from 'axios'
 
 export default {
   name: 'music-home',
+  components: {
+    Carousel,
+    CarouselItem
+  },
   data () {
     return {
-      value2: 0,
       imgList: [],
       musicList: [],
       button4: ''
@@ -251,6 +249,20 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+    .el-carousel__item h3 {
+        color: #475669;
+        font-size: 14px;
+        opacity: 0.75;
+        line-height: 200px;
+        margin: 0;
+    }
 
+    .el-carousel__item:nth-child(2n) {
+        background-color: #99a9bf;
+    }
+
+    .el-carousel__item:nth-child(2n+1) {
+        background-color: #d3dce6;
+    }
 </style>
